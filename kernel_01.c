@@ -17,24 +17,64 @@
 // Including our library
 #include "kernel_01.h"
 
+
+
 // Structures
 
 // Base registers
-typedef struct base_registers
-{
+typedef struct base_registers {
   unsigned bx1, esl;
-}registers;
+}
+registers;
 
 // Critic region register handler
-typedef union critic_region_register_handler
-{
-  registers r;
-  char far *y;
-}critic_handler;
+typedef union critic_region_register_handler {
+  registers r; // base registers to be handled
+  char far *y; // process status
+}
+critic_handler;
 
 // Process descriptor
 typedef struct process_descriptor{
   char name[255]; // process name
-  int status; // process status (active or waiting)
+  int status; // process status (active, blocked, done)
   descriptor_pointer pointer; // process pointer
-}*process_descriptor_pointer;
+}
+*process_descriptor_pointer;
+
+
+
+// System constants and global variables
+
+// Max number of running process
+#define MAX 10
+
+char
+  // Error table
+  error_01 = MAX+1, // too many process
+  error_02 = MAX+12, // called process does not exist
+  error_03 = MAX+13, // not enough memory
+  error_04 = MAX+13, // generic error
+
+  // System status
+  active = 0,
+  done = 1,
+  blocked = 2;
+
+int
+  index = 0, // index of the current running process
+  queue_size = 0, // size of the process queue
+  scheduler = 0; // which scheduling algorithm to use
+                 // 0 = round robin
+
+
+
+// Functions
+void far system_init(); // initiates the system
+void far scheduler(); // process scheduler
+void far DOS_return(); // gives the control back to DOS
+void far end_process(); // finishes the process
+void far clear_queue(); // clear the process array
+int far round_robin(); // round robin scheduler algorithm
+int far process_creator(); // initiates a process
+int far next_process(); // finds the next active process in the queue
