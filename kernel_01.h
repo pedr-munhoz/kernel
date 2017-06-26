@@ -19,11 +19,10 @@
   // c basic libraries
   #include <stdio.h>
   #include <conio.h>
-  #include <system.h>
+  #include "system.h"
 
   // primary functions headers
   void far system_init(); // initiates the system
-  void far write(); // writes messages
   void far scheduler(); // process scheduler
   void far DOS_return(); // gives the control back to DOS
   void far end_process(); // finishes the process
