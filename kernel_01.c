@@ -67,14 +67,36 @@ int
   scheduler = 0; // which scheduling algorithm to use
                  // 0 = round robin
 
+process_descriptor_pointer process_queue[MAX]; // Process queue, 10 maximo
+
+descriptor_pointer my_scheduler; // Pointer to the scheduler process
+
+critic_handler handler; // Handler containing the required registers to deal with critic zone situations
+
 
 
 // Functions
-void far system_init(); // initiates the system
-void far scheduler(); // process scheduler
-void far DOS_return(); // gives the control back to DOS
-void far end_process(); // finishes the process
-void far clear_queue(); // clear the process array
-int far round_robin(); // round robin scheduler algorithm
-int far process_creator(); // initiates a process
-int far next_process(); // finds the next active process in the queue
+
+// initiates the system
+void far system_init()
+
+// process scheduler
+void far scheduler()
+
+// gives the control back to DOS
+void far DOS_return()
+
+// finishes the process
+void far end_process()
+
+// clear the process array
+void far clear_queue()
+
+// round robin scheduler algorithm
+int far round_robin()
+
+// initiates a process
+int far process_creator()
+
+// finds the next active process in the queue
+int far next_process()
