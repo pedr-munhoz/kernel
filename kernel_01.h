@@ -28,7 +28,7 @@
   void far end_process(); // finishes the process
   void far clear_queue(); // clear the process array
   int far round_robin(); // round robin scheduler algorithm
-  int far process_creator(); // initiates a process
+  int far process_creator(void far (*end_proc)(), char p_name[]); // initiates a process
   int far next_process(); // finds the next active process in the queue
 
 

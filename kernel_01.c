@@ -105,7 +105,21 @@ void far clear_queue()
 int far round_robin()
 
 // initiates a process
-int far process_creator()
+int far process_creator(void far (*end_proc)(), char p_name[])
+{
+  if (queue_size < MAX) // Checks if there's room in the process queue
+  {
+    if (process_queue[queue_size] = (process_descriptor_pointer)malloc(sizeof(struct process_descriptor)))
+    {
+      return error_03;
+    }
+    process_queue[queue_size]->pointer = create_desc();
+    process_queue[queue_size]->status = active;
+    strcpy (process_queue[queue_size]->name, p_nome);
+    newprocess(end_proc, process_queue[queue_size]->pointer);
+    queue_size ++;
+  }
+}
 
 // finds the next active process in the queue
 int far next_process()
