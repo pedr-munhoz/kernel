@@ -89,14 +89,21 @@ void far system_init() {
 }
 
 // process scheduler
-void far scheduler()
+void far scheduler() {
+
+}
 
 // gives the control back to DOS
-void far DOS_return()
+void far DOS_return() {
+  disable(); // Creates a critical region
+  setvect(8, p_st->prev_interruption); // recovers the previous interruption
+  enable(); // Exits the critical region
+  exit(0);
+}
 
 // finishes the process
 void far end_process() {
-  disable(); // Creates a critical region 
+  disable(); // Creates a critical region
   process_queue[queue_size]->status = done; // Flags the process as finished
   enable; // Exits the critical region
   while (1); // Waits for the finished process CPU time to end
