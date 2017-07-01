@@ -78,8 +78,7 @@ critic_handler handler; // Handler containing the required registers to deal wit
 // Functions
 
 // initiates the system
-void far system_init()
-{
+void far system_init() {
   descriptor_pointer auxiliar_descriptor;
 
   my_scheduler = create_desc(); // Create the scheduler descriptor
@@ -96,7 +95,12 @@ void far scheduler()
 void far DOS_return()
 
 // finishes the process
-void far end_process()
+void far end_process() {
+  disable(); // Creates a critical region 
+  process_queue[queue_size]->status = done; // Flags the process as finished
+  enable; // Exits the critical region
+  while (1); // Waits for the finished process CPU time to end
+}
 
 // clear the process array
 void far clear_queue()
@@ -104,9 +108,8 @@ void far clear_queue()
 // round robin scheduler algorithm
 int far round_robin()
 
-// initiates a process
-int far process_creator(void far (*end_proc)(), char p_name[])
-{
+// initiates a process returns 0 if succeeds
+int far process_creator(void far (*end_proc)(), char p_name[]) {
   if (queue_size < MAX) // Checks if there's room in the process queue
   {
     if (process_queue[queue_size] = (process_descriptor_pointer)malloc(sizeof(struct process_descriptor)))
