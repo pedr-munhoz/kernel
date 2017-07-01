@@ -79,6 +79,15 @@ critic_handler handler; // Handler containing the required registers to deal wit
 
 // initiates the system
 void far system_init()
+{
+  descriptor_pointer auxiliar_descriptor;
+
+  my_scheduler = create_desc(); // Create the scheduler descriptor
+  auxiliar_descriptor = create_desc(); // Create the auxiliar descriptor
+
+  newprocess(scheduler, my_scheduler); // Creates the scheduler process
+  transfer(auxiliar_descriptor, my_scheduler); // Gives the control to the scheduler
+}
 
 // process scheduler
 void far scheduler()
