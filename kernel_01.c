@@ -90,11 +90,30 @@ void far system_init() {
 
 // process scheduler
 void far scheduler() {
-  /*
   p_st->origin = my_scheduler; // Setting the scheduler as the origin process,
                                // any interruptions will return the control to it
   p_st->destiny = process_queue[0];
-  */
+  p_st->time_int = 8;
+
+  while(1) {
+    disable();
+    _AL = 0;
+    _AH = 0x34;
+
+    geninterrupt(0x21);
+
+    handler.r.bx1 = _BX;
+    handler.r.esl = _ES;
+
+    if(handler.y != active) {
+      iotransfer();
+      index = next_process();
+      if(index>=MAX)
+        DOS_return)();
+      p_st->destiny = process_queue[index]->pointer;
+    }
+  }
+  enable();
 }
 
 // gives the control back to DOS
