@@ -119,6 +119,11 @@ int far process_creator(void far (*end_proc)(), char p_name[])
     newprocess(end_proc, process_queue[queue_size]->pointer);
     queue_size ++;
   }
+  else
+  {
+    return error_01;
+  }
+  return 0;
 }
 
 // finds the next active process in the queue
